@@ -17,6 +17,7 @@ EFI_STATUS InitializeProgramVariables(program_variables* programVariables){
 
     programVariables->chosenDisk = GENERAL_ERR_VAL;
     programVariables->exitProgram = NOT_EXIT;
+    Print(L"%d\n", programVariables->exitProgram);
 
     status = gBS->LocateProtocol(&gEfiDevicePathToTextProtocolGuid, NULL, (void**)&programVariables->devicePathToTextProtocol);
     if (status != EFI_SUCCESS){
@@ -29,6 +30,7 @@ EFI_STATUS InitializeProgramVariables(program_variables* programVariables){
         ERR("Error loading EFI_SIMPLE_TEXT_INPUT_PROTOCOL!\n");
         return EFI_PROTOCOL_ERROR;
     }
+    Print(L"%d\n", programVariables->exitProgram);
     return EFI_SUCCESS;
 }
 
@@ -92,10 +94,13 @@ EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE imgHandle, IN EFI_SYSTEM_TABLE *Sy
     }
 
     PrintWelcomeMessage();
+    Print(L"%d\n", programVariables.exitProgram);
     programVariables.diskDevicesCount = LocateAllDiskDevices(programVariables.diskDevices, imgHandle, programVariables.devicePathToTextProtocol);
     if (programVariables.diskDevicesCount == GENERAL_ERR_VAL){
         return EFI_OUT_OF_RESOURCES;
     }
+    Print(L"Disk number: %d\n", programVariables.diskDevicesCount);
+    Print(L"%d\n", programVariables.exitProgram);
 
     while (programVariables.exitProgram == NOT_EXIT){
         PrintMenu();
