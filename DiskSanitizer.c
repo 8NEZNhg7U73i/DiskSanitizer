@@ -1,7 +1,7 @@
 #include "DiskSanitizer.h"
 
 CHAR16 EFIAPI ReadKey(EFI_SIMPLE_TEXT_INPUT_PROTOCOL* inputProtocol){
-    EFI_KEY_DATA key = {0};
+    EFI_INPUT_KEY key;
     UINTN index;
     EFI_STATUS status;
     gBS->WaitForEvent(1, &(inputProtocol->WaitForKey), &index);
@@ -9,7 +9,7 @@ CHAR16 EFIAPI ReadKey(EFI_SIMPLE_TEXT_INPUT_PROTOCOL* inputProtocol){
     if (status!=EFI_SUCCESS){
         ERR("Reading key failed");
     }
-    return key.Key.UnicodeChar;
+    return key.UnicodeChar;
 }
 
 EFI_STATUS InitializeProgramVariables(program_variables* programVariables){
