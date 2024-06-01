@@ -17,7 +17,12 @@
 [LibraryClasses]
   UefiApplicationEntryPoint
   UefiLib
- 
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  UefiDriverEntryPoint
+  DebugLib
+  PrintLib
+
 [Protocols]
 gEfiSimpleTextInputProtocolGuid
 gEfiDiskIoProtocolGuid
