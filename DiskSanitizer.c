@@ -17,7 +17,7 @@ EFI_STATUS InitializeProgramVariables(program_variables* programVariables){
 
     programVariables->chosenDisk = GENERAL_ERR_VAL;
     programVariables->exitProgram = NOT_EXIT;
-    Print(L"%d\n", programVariables.exitProgram);
+    Print(L"%d\n", programVariables.>exitProgram);
 
     status = gBS->LocateProtocol(&gEfiDevicePathToTextProtocolGuid, NULL, (void**)&programVariables->devicePathToTextProtocol);
     if (status != EFI_SUCCESS){
@@ -30,7 +30,7 @@ EFI_STATUS InitializeProgramVariables(program_variables* programVariables){
         ERR("Error loading EFI_SIMPLE_TEXT_INPUT_PROTOCOL!\n");
         return EFI_PROTOCOL_ERROR;
     }
-    Print(L"%d\n", programVariables.exitProgram);
+    Print(L"%d\n", programVariables->exitProgram);
     return EFI_SUCCESS;
 }
 
