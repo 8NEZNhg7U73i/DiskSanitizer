@@ -16,7 +16,7 @@ EFI_STATUS InitializeProgramVariables(program_variables* programVariables){
     EFI_STATUS status;
 
     programVariables->chosenDisk = GENERAL_ERR_VAL;
-    programVariables->exitProgram = NOTIT;
+    programVariables->exitProgram = NOT_EXIT;
 
     status = gBS->LocateProtocol(&gEfiDevicePathToTextProtocolGuid, NULL, (void**)&programVariables->devicePathToTextProtocol);
     if (status != EFI_SUCCESS){
@@ -83,7 +83,7 @@ EFI_STATUS ShowDiskContent(disk_device* diskDevice){
 EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE imgHandle, IN EFI_SYSTEM_TABLE *SystemTable){
     EFI_STATUS status;
     program_variables programVariables;
-    UINTN menuOption = NOTIT;
+    UINTN menuOption = NOT_EXIT;
 
     status = InitializeProgramVariables(&programVariables);
     if (status != EFI_SUCCESS){
@@ -97,7 +97,7 @@ EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE imgHandle, IN EFI_SYSTEM_TABLE *Sy
         return EFI_OUT_OF_RESOURCES;
     }
 
-    while (programVariables.exitProgram == NOTIT){
+    while (programVariables.exitProgram == NOT_EXIT){
         PrintMenu();
         menuOption = ReadKey(programVariables.inputProtocol) - ASCII_NUMBERS_BEGINNING;
         switch (menuOption){
