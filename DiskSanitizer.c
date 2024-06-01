@@ -1,6 +1,6 @@
 #include "DiskSanitizer.h"
 
-CHAR16 EFIAPI ReadKey(EFI_SIMPLE_TEXT_INPUT_PROTOCOL* inputProtocol){
+CHAR16 EFIAPI ReadKey(EFI_SIMPLE_TEXT_IN_PROTOCOL* inputProtocol){
     EFI_INPUT_KEY key;
     UINTN index;
     EFI_STATUS status;
