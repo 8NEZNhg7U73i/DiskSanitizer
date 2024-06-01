@@ -80,7 +80,7 @@ EFI_STATUS ShowDiskContent(disk_device* diskDevice){
     return EFI_SUCCESS;
 }
 
-EFI_STATUS RunTheProgram(EFI_BOOT_SERVICES* gBS, EFI_HANDLE imgHandle){
+EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable){
     EFI_STATUS status;
     program_variables programVariables;
     UINTN menuOption = NOT_EXIT;
