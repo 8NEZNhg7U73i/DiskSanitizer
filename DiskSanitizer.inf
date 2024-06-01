@@ -24,7 +24,7 @@
   PrintLib
 
 [Protocols]
-gEfiSimpleTextInputProtocolGuid
+gEfiSimpleTextInProtocolGuid
 gEfiDiskIoProtocolGuid
 gEfiBlockIoProtocolGuid
 gEfiDevicePathToTextProtocolGuid
