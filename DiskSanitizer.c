@@ -4,8 +4,8 @@ CHAR16 EFIAPI ReadKey(EFI_SIMPLE_TEXT_INPUT_PROTOCOL* inputProtocol){
     EFI_KEY_DATA key = {0};
     UINTN index;
     EFI_STATUS status;
-    gBS->WaitForEvent(1, &(inputProtocol->WaitForKeyEx), &index);
-    status = inputProtocol->ReadKeyStrokeEx(inputProtocol, &key);
+    gBS->WaitForEvent(1, &(inputProtocol->WaitForKey), &index);
+    status = inputProtocol->ReadKeyStroke(inputProtocol, &key);
     if (status!=EFI_SUCCESS){
         ERR("Reading key failed");
     }
