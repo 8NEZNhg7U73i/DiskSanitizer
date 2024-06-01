@@ -96,7 +96,8 @@ EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE imgHandle, IN EFI_SYSTEM_TABLE *Sy
     if (programVariables.diskDevicesCount == GENERAL_ERR_VAL){
         return EFI_OUT_OF_RESOURCES;
     }
-
+    Print(L"Disk number: %d\n", programVariables.diskDevicesCount);
+    
     while (programVariables.exitProgram == NOT_EXIT){
         PrintMenu();
         menuOption = ReadKey(programVariables.inputProtocol) - ASCII_NUMBERS_BEGINNING;
