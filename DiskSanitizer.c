@@ -24,7 +24,7 @@ EFI_STATUS InitializeProgramVariables(program_variables* programVariables){
         return EFI_PROTOCOL_ERROR;
     }
 
-    status = gBS->LocateProtocol(&gEfiSimpleTextinputProtocolGuid, NULL, (void**)&programVariables->inputProtocol);
+    status = gBS->LocateProtocol(&gEfiSimpleTextInProtocolGuid, NULL, (void**)&programVariables->inputProtocol);
     if (status != EFI_SUCCESS){
         ERR("Error loading EFI_SIMPLE_TEXT_INPUT_PROTOCOL!\n");
         return EFI_PROTOCOL_ERROR;
