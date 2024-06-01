@@ -124,7 +124,7 @@ EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE imgHandle, IN EFI_SYSTEM_TABLE *Sy
             case TEST_WRITE_CONTENT_TO_DISK:
                 if (programVariables.chosenDisk != GENERAL_ERR_VAL){
                     Print(L"Enter the number to write on the disk\n");
-                    UINT8 numberToWrite = UINT8 (ReadKey(programVariables.inputExProtocol) - ASCII_NUMBERS_BEGINNING);
+                    UINT8 numberToWrite = (UINT8) (ReadKey(programVariables.inputExProtocol) - ASCII_NUMBERS_BEGINNING);
                     EraseTheDrive(&programVariables.diskDevices[programVariables.chosenDisk], numberToWrite);
                 }
                 else{
