@@ -1,11 +1,11 @@
 #include "DiskSanitizer.h"
 
-CHAR16 EFIAPI ReadKey(EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL* inputExProtocol){
+CHAR16 EFIAPI ReadKey(EFI_SIMPLE_TEXT_INPUT_PROTOCOL* inputProtocol){
     EFI_KEY_DATA key = {0};
     UINTN index;
     EFI_STATUS status;
-    gBS->WaitForEvent(1, &(inputExProtocol->WaitForKeyEx), &index);
-    status = inputExProtocol->ReadKeyStrokeEx(inputExProtocol, &key);
+    gBS->WaitForEvent(1, &(inputProtocol->WaitForKeyEx), &index);
+    status = inputProtocol->ReadKeyStrokeEx(inputProtocol, &key);
     if (status!=EFI_SUCCESS){
         ERR("Reading key failed");
     }
@@ -16,7 +16,7 @@ EFI_STATUS InitializeProgramVariables(program_variables* programVariables){
     EFI_STATUS status;
 
     programVariables->chosenDisk = GENERAL_ERR_VAL;
-    programVariables->exitProgram = NOT_EXIT;
+    programVariables->exitProgram = NOTIT;
 
     status = gBS->LocateProtocol(&gEfiDevicePathToTextProtocolGuid, NULL, (void**)&programVariables->devicePathToTextProtocol);
     if (status != EFI_SUCCESS){
@@ -24,9 +24,9 @@ EFI_STATUS InitializeProgramVariables(program_variables* programVariables){
         return EFI_PROTOCOL_ERROR;
     }
 
-    status = gBS->LocateProtocol(&gEfiSimpleTextInputExProtocolGuid, NULL, (void**)&programVariables->inputExProtocol);
+    status = gBS->LocateProtocol(&gEfiSimpleTextinputProtocolGuid, NULL, (void**)&programVariables->inputProtocol);
     if (status != EFI_SUCCESS){
-        ERR("Error loading EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL!\n");
+        ERR("Error loading EFI_SIMPLE_TEXT_INPUT_PROTOCOL!\n");
         return EFI_PROTOCOL_ERROR;
     }
     return EFI_SUCCESS;
@@ -83,7 +83,7 @@ EFI_STATUS ShowDiskContent(disk_device* diskDevice){
 EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE imgHandle, IN EFI_SYSTEM_TABLE *SystemTable){
     EFI_STATUS status;
     program_variables programVariables;
-    UINTN menuOption = NOT_EXIT;
+    UINTN menuOption = NOTIT;
 
     status = InitializeProgramVariables(&programVariables);
     if (status != EFI_SUCCESS){
@@ -97,9 +97,9 @@ EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE imgHandle, IN EFI_SYSTEM_TABLE *Sy
         return EFI_OUT_OF_RESOURCES;
     }
 
-    while (programVariables.exitProgram == NOT_EXIT){
+    while (programVariables.exitProgram == NOTIT){
         PrintMenu();
-        menuOption = ReadKey(programVariables.inputExProtocol) - ASCII_NUMBERS_BEGINNING;
+        menuOption = ReadKey(programVariables.inputProtocol) - ASCII_NUMBERS_BEGINNING;
         switch (menuOption){
             case SHOW_CURRENTLY_CHOSEN_DISK:
                 if (programVariables.chosenDisk != GENERAL_ERR_VAL){
@@ -112,7 +112,7 @@ EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE imgHandle, IN EFI_SYSTEM_TABLE *Sy
                 break;
             case CHOOSE_DISK:
                 PrintAllDrives(programVariables.diskDevices, programVariables.diskDevicesCount);
-                programVariables.chosenDisk = ReadKey(programVariables.inputExProtocol) - ASCII_NUMBERS_BEGINNING;
+                programVariables.chosenDisk = ReadKey(programVariables.inputProtocol) - ASCII_NUMBERS_BEGINNING;
                 if (programVariables.chosenDisk < 0 || programVariables.chosenDisk > programVariables.diskDevicesCount){
                     programVariables.chosenDisk = GENERAL_ERR_VAL;
                     Print(L"You chose a device that is not in the system!\n");
@@ -124,7 +124,7 @@ EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE imgHandle, IN EFI_SYSTEM_TABLE *Sy
             case TEST_WRITE_CONTENT_TO_DISK:
                 if (programVariables.chosenDisk != GENERAL_ERR_VAL){
                     Print(L"Enter the number to write on the disk\n");
-                    UINT8 numberToWrite = (UINT8) (ReadKey(programVariables.inputExProtocol) - ASCII_NUMBERS_BEGINNING);
+                    UINT8 numberToWrite = (UINT8) (ReadKey(programVariables.inputProtocol) - ASCII_NUMBERS_BEGINNING);
                     EraseTheDrive(&programVariables.diskDevices[programVariables.chosenDisk], numberToWrite);
                 }
                 else{

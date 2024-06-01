@@ -19,7 +19,7 @@
   UefiLib
  
 [Protocols]
-gEfiSimpleTextInputExProtocolGuid
+gEfiSimpleTextInputProtocolGuid
 gEfiDiskIoProtocolGuid
 gEfiBlockIoProtocolGuid
 gEfiDevicePathToTextProtocolGuid

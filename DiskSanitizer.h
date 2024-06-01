@@ -8,7 +8,7 @@
 typedef struct program_variables{
     /*Protocols*/
     EFI_DEVICE_PATH_TO_TEXT_PROTOCOL* devicePathToTextProtocol;
-    EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL* inputExProtocol;
+    EFI_SIMPLE_TEXT_INPUT_PROTOCOL* inputProtocol;
 
     /*Variables*/
     disk_device diskDevices[8];
@@ -28,7 +28,7 @@ typedef enum menu_options{
     NOT_EXIT,
 } menu_options;
 
-CHAR16 EFIAPI ReadKey(EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL* inputExProtocol);
+CHAR16 EFIAPI ReadKey(EFI_SIMPLE_TEXT_INPUT_PROTOCOL* inputProtocol);
 
 EFI_STATUS InitializeProgramVariables(program_variables* programVariables);
 EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable);
