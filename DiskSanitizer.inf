@@ -20,7 +20,6 @@
   UefiLib
   UefiBootServicesTableLib
   UefiRuntimeServicesTableLib
-  UefiDriverEntryPoint
   DebugLib
   PrintLib
 
