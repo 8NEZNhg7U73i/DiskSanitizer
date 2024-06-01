@@ -94,6 +94,7 @@ EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE imgHandle, IN EFI_SYSTEM_TABLE *Sy
     }
 
     PrintWelcomeMessage();
+    Print(L"%d\n", programVariables.exitProgram);
     programVariables.diskDevicesCount = LocateAllDiskDevices(programVariables.diskDevices, imgHandle, programVariables.devicePathToTextProtocol);
     if (programVariables.diskDevicesCount == GENERAL_ERR_VAL){
         return EFI_OUT_OF_RESOURCES;
