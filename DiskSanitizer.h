@@ -31,7 +31,7 @@ typedef enum menu_options{
 CHAR16 EFIAPI ReadKey(EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL* inputExProtocol);
 
 EFI_STATUS InitializeProgramVariables(program_variables* programVariables);
-EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable)
+EFI_STATUS EFIAPI RunTheProgram(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE *SystemTable);
 EFI_STATUS DeinitializeProgramVariables(program_variables* programVariables);
 
 EFI_STATUS EraseTheDrive(disk_device* diskDevice, UINT8 numberToWrite);
