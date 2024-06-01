@@ -11,7 +11,7 @@ typedef struct program_variables{
     EFI_SIMPLE_TEXT_INPUT_PROTOCOL* inputProtocol;
 
     /*Variables*/
-    disk_device diskDevices;
+    disk_device diskDevices[100];
     UINTN diskDevicesCount;
     UINTN chosenDisk;
     UINTN exitProgram;
